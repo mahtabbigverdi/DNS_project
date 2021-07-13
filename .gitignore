@@ -1,0 +1,16 @@
+
+*
+!*/
+
+# Then add everything needed
+
+!/apps/**
+!/docs/**
+!/.git/**
+!/.github/**
+!.gitignore
+!/DNS/**
+!manage.py
+!requirements.txt
+
+*.pyc
