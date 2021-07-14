@@ -17,9 +17,11 @@ from django.contrib import admin
 from django.urls import path, include
 from apps.ca import urls as ca_urls
 from apps.buyer import urls as buyer_urls
+from apps.bank import urls as bank_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ca/', include(ca_urls)),
-    path('buyer/', include(buyer_urls))
+    path('buyer/', include(buyer_urls)),
+    path('bank/', include(bank_urls))
 ]
