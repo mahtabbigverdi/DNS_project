@@ -42,6 +42,10 @@ INSTALLED_APPS = [
     'apps.blockchain',
     'apps.merchant',
     'apps.buyer',
+
+    'django_extensions',
+    'django_object_actions',
+    'django_ca',
 ]
 
 MIDDLEWARE = [
