@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'apps.blockchain',
     'apps.merchant',
     'apps.buyer',
+    'apps.ca',
 
     'django_extensions',
     'django_object_actions',

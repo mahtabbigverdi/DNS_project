@@ -12,5 +12,8 @@
 !/DNS/**
 !manage.py
 !requirements.txt
+!*.crt
+!*.pem
+!*.key
 
 *.pyc
