@@ -67,6 +67,8 @@ def load_private_key(filename):
 
 def check_public(request):
     m = request.POST['data']
+    print('heeeelllllllloooo%%%%%%%%%%%%%%%%%%%%%')
+    print(m)
     data = m.split(',')
     one_day = datetime.timedelta(1, 0, 0)
     user_public_key= data[4].encode('')
@@ -130,4 +132,3 @@ def generate_ca(request):
         private_key=ca_private_key, algorithm=hashes.SHA256(),
         backend=default_backend()
     )
-    

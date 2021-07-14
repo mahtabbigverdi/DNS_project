@@ -6,4 +6,8 @@ from apps.ca import views
 app_name = "ca"
 urlpatterns = [
     path('start_ca/', views.start_ca),
+    path('check_public/', views.check_public),
+
 ]
+
+

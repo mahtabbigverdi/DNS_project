@@ -29,13 +29,16 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives.serialization import load_pem_public_key, load_pem_private_key
 from cryptography.x509.oid import NameOID
 import datetime
+from cryptography.hazmat.primitives.asymmetric import padding
 import uuid
+import requests
+
 
 
 def load_pub_key(filename):
     with open(filename, 'rb') as pem_in:
         pemlines = pem_in.read()
-    key = load_pem_public_key(pemlines, None, default_backend())
+    key = load_pem_public_key(pemlines, None)
     return key
 
 
@@ -70,18 +73,28 @@ def create_user(request):
     name = 'buyer1'
     organization = 'DNS LAB'
     unit_name = 'LAB'
-    m = name + ',' + organization + ',' + unit_name + ',' + t + ',' + public_key.public_bytes().decode('utf-8')
+    m = name + ',' + organization + ',' + unit_name + ',' + str(t) + ',' + public_key.public_bytes(encoding=serialization.Encoding.PEM,
+            format=serialization.PublicFormat.PKCS1).decode('utf-8')
 
     ca_public_key = load_pub_key('ca_public.key')
-    ca_public_key.encrypt(m)
-    # todo
+    cipher = ca_public_key.encrypt(m, padding.OAEP(
+        mgf=padding.MGF1(algorithm=hashes.SHA1()),
+        algorithm=hashes.SHA1(),
+        label=None))
+
+    r = requests.post('https://127.0.0.1:8004/ca/check_public', {'data': cipher}, verify=False)
+
 
 
 def decode_nonce(request):
     n = request.POST['data']
     private_key = load_private_key('buyer_private.key')
     public_key = load_pub_key('buyer_public.key')
-    res = private_key.decrypt(n)
+    res = private_key.decrypt(n , padding.OAEP(
+        mgf=padding.MGF1(algorithm=hashes.SHA1()),
+        algorithm=hashes.SHA1(),
+        label=None
+    ))
 
     t = datetime.datetime.now().timestamp()
     name = 'buyer1'
@@ -92,3 +105,4 @@ def decode_nonce(request):
 
 
 def save_certificate(request):
+    pass
