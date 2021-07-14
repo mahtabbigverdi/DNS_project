@@ -23,6 +23,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import zlib
 from apps.buyer.models import *
+from cryptography.hazmat.primitives import hashes
 
 def load_pub_key(filename):
     with open(filename, 'rb') as pem_in:
@@ -121,6 +122,7 @@ def create_account(request):
     id = request.POST['account_id']
     password = request.POST['password']
     Buyer.objects.create(id_in_bank=id, password_in_bank=password)
+    print('your account created successfully!')
     return HttpResponse('')
 
 
