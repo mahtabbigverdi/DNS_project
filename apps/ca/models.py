@@ -1,3 +1,7 @@
 from django.db import models
 
-# Create your models here.
+
+class NonceChecker(models.Model):
+    val = models.CharField()
+    id = models.CharField()
+    name = models.CharField()
